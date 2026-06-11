@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="mt-3">Заказы</h2>
+<table class="table table-striped">
+    <tr><th>№</th><th>Клиент</th><th>Пункт выдачи</th><th>Дата заказа</th><th>Дата доставки</th><th>Статус</th>
+    {% if user.rol == 'admin' %}<th></th>{% endif %}</tr>
+    {% for o in orders %}
+    <tr>
+        <td>{{ o.id }}</td>
+        <td>{{ o.polzovatel.fio }}</td>
+        <td>{{ o.punkt_vydachi.nazvanie|truncatechars:30 }}</td>
+        <td>{{ o.data_zakaza }}</td>
+        <td>{{ o.data_dostavki }}</td>
+        <td>{{ o.status.nazvanie }}</td>
+        {% if user.rol == 'admin' %}
+        <td>
+            <a href="/orders/{{ o.id }}/edit/" class="btn btn-sm btn-warning">Ред</a>
+            <a href="/orders/{{ o.id }}/delete/" class="btn btn-sm btn-danger">Уд</a>
+        </td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+</table>
+{% if user.rol == 'admin' %}
+    <a href="/orders/add/" class="btn btn-accent">Добавить</a>
+{% endif %}
+{% endblock %}

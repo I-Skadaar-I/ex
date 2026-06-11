@@ -1,0 +1,45 @@
+{% load django_bootstrap5 %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Магазин Велосипедов</title>
+    <link rel="icon" href="/static/Icon.ico">
+    {% bootstrap_css %}
+    <style>
+        body { font-family: Verdana, sans-serif; }
+        .bg-custom { background-color: #E8F5E9 !important; }
+        .btn-accent { background-color: #2E7D32; color: #fff; border: none; }
+        .btn-accent:hover { background-color: #1e5e22; color: #fff; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-custom">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img src="/static/Icon.png" height="30" alt="Logo">
+                Магазин Велосипедов
+            </a>
+            <div class="navbar-nav">
+                <a class="nav-link" href="/">Товары</a>
+                {% if user.is_authenticated and user.rol in 'manager,admin' %}
+                <a class="nav-link" href="/orders/">Заказы</a>
+                {% endif %}
+            </div>
+            <div class="ms-auto">
+                {% if user.is_authenticated %}
+                <span class="me-2">{{ user.fio }}</span>
+                <a href="/logout/" class="btn btn-sm btn-outline-danger">Выйти</a>
+                {% else %}
+                <a href="/login/" class="btn btn-sm btn-accent">Войти</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-3">
+        {% block content %}{% endblock %}
+    </div>
+    {% bootstrap_javascript %}
+</body>
+</html>

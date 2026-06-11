@@ -1,0 +1,24 @@
+{% load django_bootstrap5 %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход</title>
+    {% bootstrap_css %}
+    <style>
+        body { font-family: Verdana, sans-serif; }
+        .btn-accent { background-color: #2E7D32 !important; color: #fff !important; border: none !important; }
+        .btn-accent:hover { background-color: #1e5e22 !important; color: #fff !important; }
+    </style>
+</head>
+<body class="container mt-5">
+    <h2>Вход в систему</h2>
+    <form method="post">{% csrf_token %}
+        <input type="text" name="username" class="form-control mb-2" placeholder="Логин">
+        <input type="password" name="password" class="form-control mb-2" placeholder="Пароль">
+        <button type="submit" class="btn btn-accent">Войти</button>
+        <a href="/" class="btn btn-secondary">Войти как гость</a>
+    </form>
+</body>
+</html>
