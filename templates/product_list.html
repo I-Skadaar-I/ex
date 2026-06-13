@@ -3,7 +3,7 @@
 <h2 class="mt-3">Каталог</h2>
 {% if user.rol in 'manager,admin' %}
 <form method="get" class="mb-3">
-    <input type="text" name="search" class="form-control" placeholder="Поиск по описанию..." value="{{ search }}">
+    <input type="text" name="search" class="form-control" placeholder="Поиск ..." value="{{ search }}">
 </form>
 {% endif %}
 

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import user_passes_test
+from django.db.models import Q
 from.models import (Tovar, TipTovara, Kategoriya, Postavschik, Proizvoditel, Zakaz, User, PunktVydachi, StatusZakaza)
 
 # Проверка пользователя
@@ -58,7 +59,14 @@ def product_list(request):
     search = request.GET.get('search', '')
     user = request.user if request.user.is_authenticated else None
     if user and is_manager_or_admin(user) and search:
-        products = products.filter(opisanie__icontains=search)
+        products = products.filter(
+            Q(artikul__icontains=search) |
+            Q(opisanie__icontains=search) |
+            Q(tip_tovara__nazvanie__icontains=search) |
+            Q(kategoriya__nazvanie__icontains=search) |
+            Q(postavschik__nazvanie__icontains=search) |
+            Q(proizvoditel__nazvanie__icontains=search)
+        )
     return render(request, 'product_list.html', {'products': products, 'search': search})
 
 # Добавление товара (только админ)
